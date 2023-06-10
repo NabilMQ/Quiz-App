@@ -49,6 +49,7 @@ class HalamanQuiz extends State <Quiz> {
   void dispose() {
     super.dispose();
     questionAnswer.trueOrFalse = [2, 2, 2, 2];
+    answerSelected = false;
   }
 
   void newQuestion() { // create new question
@@ -111,9 +112,11 @@ class HalamanQuiz extends State <Quiz> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      setState(() {
+                        resetQuiz();
+                      });
                       deleteHighScore();
                       Navigator.of(ctx).pop();
-                      Navigator.of(context).pop();
                       Navigator.of(context).pop();
                     }, 
                     child: const Text("Exit")
@@ -154,7 +157,7 @@ class HalamanQuiz extends State <Quiz> {
                                   Navigator.of(context).push(toQuizPage());
                                 });
                               }
-                              else if (answerSelected == false && checkAnswer(questionAnswer.divisionAnswerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)))) {
+                              else if (answerSelected == false) {
                                 answerSelected = true;
                                 if (questionAnswer.score > questionAnswer.highscore) {
                                   questionAnswer.highscore = questionAnswer.score;
@@ -184,10 +187,12 @@ class HalamanQuiz extends State <Quiz> {
                                           ),
                                           ElevatedButton(
                                             onPressed: () {
+                                              setState(() {
+                                                resetQuiz();
+                                              });
                                               Navigator.of(ctx).pop();
                                               Navigator.of(context).pop();
                                               streamController.add(index);
-                                              resetQuiz();
                                             }, 
                                             child: const Text("Go back")
                                           ),
@@ -258,7 +263,7 @@ class HalamanQuiz extends State <Quiz> {
                                   Navigator.of(context).push(toQuizPage());
                                 });
                               }
-                              else if (answerSelected == false && !checkAnswer(questionAnswer.answerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)))) {
+                              else if (answerSelected == false) {
                                 answerSelected = true;
                                 if (questionAnswer.score > questionAnswer.highscore) {
                                   questionAnswer.highscore = questionAnswer.score;

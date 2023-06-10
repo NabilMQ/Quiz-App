@@ -250,7 +250,7 @@ class _LevelState extends State<Level> {
                     Navigator.of(context).push(toQuizPage());
                   }
                 },
-                child: Center(
+                child: const Center(
                   child: Text(
                     "Play",
                     style: TextStyle(
