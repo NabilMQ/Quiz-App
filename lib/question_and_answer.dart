@@ -9,9 +9,11 @@ mixin questionAnswer { // variable used for creating question and answer
     "/",
   ];
 
+  static List <int> chosenOperation = [];
+
   static int first = Random().nextInt(10) + 1;
   static int second = Random().nextInt(10) + 1;
-  static int randomizeOperation = Random().nextInt(4);
+  static late int randomizeOperation;
   static String operation = operationList.elementAt(randomizeOperation);
 
   static List <int> chooseAnswer = [0, 1, 2, 3];
@@ -24,10 +26,14 @@ mixin questionAnswer { // variable used for creating question and answer
   static List <int> trueOrFalse = [2, 2, 2, 2];
 }
 
+void resetQuiz() {
+  questionAnswer.chosenOperation.clear();
+}
+
 void changeQuestion() { // change the question while the answer is right
   questionAnswer.first = Random().nextInt(10) + 1;
   questionAnswer.second = Random().nextInt(10) + 1;
-  questionAnswer.randomizeOperation = Random().nextInt(4);
+  questionAnswer.randomizeOperation = questionAnswer.chosenOperation.elementAt(Random().nextInt(questionAnswer.chosenOperation.length));
   questionAnswer.operation = questionAnswer.operationList.elementAt(questionAnswer.randomizeOperation);
 
   questionAnswer.chooseAnswer.shuffle();

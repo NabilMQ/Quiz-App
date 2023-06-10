@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'quiz_page.dart';
+import 'level.dart';
 import 'question_and_answer.dart';
 import 'store_data.dart';
 import 'dart:async';
@@ -112,7 +112,7 @@ class _HomePage extends State <_Home> with SingleTickerProviderStateMixin{
                       fixedSize: MaterialStateProperty.all(Size(width * 0.5, height * 0.1)),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(toQuizPage());
+                      Navigator.of(context).push(toLevelPage());
                     },
                     child: const Center(
                       child: Text(

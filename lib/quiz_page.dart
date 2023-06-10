@@ -37,6 +37,8 @@ class Quiz extends StatefulWidget {
 
 class HalamanQuiz extends State <Quiz> {
 
+  bool answerSelected = false;
+
   @override
   void initState() {
     super.initState();
@@ -112,6 +114,7 @@ class HalamanQuiz extends State <Quiz> {
                       deleteHighScore();
                       Navigator.of(ctx).pop();
                       Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     }, 
                     child: const Text("Exit")
                   ),
@@ -142,7 +145,8 @@ class HalamanQuiz extends State <Quiz> {
                           style: buttonStyle,
                           onPressed: () {
                             setState(() {
-                              if (checkAnswer(questionAnswer.divisionAnswerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)))) {
+                              if (answerSelected == false && checkAnswer(questionAnswer.divisionAnswerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)))) {
+                                answerSelected = true;
                                 questionAnswer.trueOrFalse[index] = 1;
                                 questionAnswer.score++;
                                 Future.delayed(const Duration(milliseconds: 1500), () {
@@ -150,7 +154,8 @@ class HalamanQuiz extends State <Quiz> {
                                   Navigator.of(context).push(toQuizPage());
                                 });
                               }
-                              else {
+                              else if (answerSelected == false && checkAnswer(questionAnswer.divisionAnswerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)))) {
+                                answerSelected = true;
                                 if (questionAnswer.score > questionAnswer.highscore) {
                                   questionAnswer.highscore = questionAnswer.score;
                                 }
@@ -182,6 +187,7 @@ class HalamanQuiz extends State <Quiz> {
                                               Navigator.of(ctx).pop();
                                               Navigator.of(context).pop();
                                               streamController.add(index);
+                                              resetQuiz();
                                             }, 
                                             child: const Text("Go back")
                                           ),
@@ -243,7 +249,8 @@ class HalamanQuiz extends State <Quiz> {
                           style: buttonStyle,
                           onPressed: () {
                             setState(() {
-                              if (checkAnswer(questionAnswer.answerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)))) {
+                              if (answerSelected == false && checkAnswer(questionAnswer.answerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)))) {
+                                answerSelected = true;
                                 questionAnswer.trueOrFalse[index] = 1;
                                 questionAnswer.score++;
                                 Future.delayed(const Duration(milliseconds: 1500), () {
@@ -251,7 +258,8 @@ class HalamanQuiz extends State <Quiz> {
                                   Navigator.of(context).push(toQuizPage());
                                 });
                               }
-                              else {
+                              else if (answerSelected == false && !checkAnswer(questionAnswer.answerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)))) {
+                                answerSelected = true;
                                 if (questionAnswer.score > questionAnswer.highscore) {
                                   questionAnswer.highscore = questionAnswer.score;
                                 }
