@@ -1,4 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:project_1/quizPage/mix_operation.dart';
+import 'package:project_1/quizPage/multiplication_operation.dart';
+import 'package:project_1/quizPage/substraction_operation.dart';
 import 'dart:math';
+import 'addition_operation.dart';
+import 'division_operation.dart';
 
 mixin questionAnswer { // variable used for creating question and answer
     
@@ -21,8 +27,6 @@ mixin questionAnswer { // variable used for creating question and answer
   static late List <double> divisionAnswerList;
   static late int userAnswer;
   static late double userDivisionAnswer;
-  static int score = 0;
-  static int highscore = 0;
   static List <int> trueOrFalse = [2, 2, 2, 2];
 }
 
@@ -94,4 +98,51 @@ void getAnswer() {
     questionAnswer.userAnswer = 0;
     questionAnswer.userDivisionAnswer = questionAnswer.divisionAnswerList.elementAt(0);
   }
+}
+
+bool isAddition() {
+  return questionAnswer.randomizeOperation == 0 && questionAnswer.chosenOperation.length == 1;
+}
+
+bool isSubstraction() {
+  return questionAnswer.randomizeOperation == 1 && questionAnswer.chosenOperation.length == 1;
+}
+
+bool isMultiplication() {
+  return questionAnswer.randomizeOperation == 2 && questionAnswer.chosenOperation.length == 1;
+}
+
+bool isDivision() {
+  return questionAnswer.randomizeOperation == 3 && questionAnswer.chosenOperation.length == 1;
+}
+
+bool isDivisionOperation() {
+  return questionAnswer.randomizeOperation == 3;
+}
+
+Widget returnPage() {
+  if (isAddition()) {
+    return const AdditionOperation();
+  }
+  else if (isSubstraction()) {
+    return const SubstractionOperation();
+  }
+  else if (isMultiplication()) {
+    return const MultiplicationOperation();
+  }
+  else if (isDivision()) {
+    return const DivisionOperation();
+  }
+  else {
+    return const MixOperation();
+  }
+}
+
+bool isAnswerCorrect(bool answerSelected, int index) {
+  if (isDivisionOperation()) {
+    return answerSelected == false && checkAnswer(questionAnswer.divisionAnswerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)));
+  }
+  else {
+    return answerSelected == false && checkAnswer(questionAnswer.answerList.elementAt(questionAnswer.chooseAnswer.elementAt(index)));
+  }  
 }
