@@ -6,8 +6,8 @@ A simple quiz app that generate its own question and answer, this app is using h
 
 Audios are from https://mixkit.co/ 
 
-Page turn single__
-Correct answer tone__
-Funny fail low tone__
-Slow sad trombone fail__
+Page turn single<br/>
+Correct answer tone<br/>
+Funny fail low tone<br/>
+Slow sad trombone fail
 
