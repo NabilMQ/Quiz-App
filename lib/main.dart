@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_1/data/app_data.dart';
-import 'package:project_1/data/temp_data.dart';
 import 'chooseLevelPage/level.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:project_1/data/data_func.dart';
-import 'package:project_1/chooseLevelPage/level_widget_data.dart';
+import 'package:project_1/data/audio_data.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -20,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      useInheritedMediaQuery: true,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: const TextTheme(
@@ -117,7 +117,9 @@ class _HomePage extends State <_Home> with SingleTickerProviderStateMixin{
           SvgPicture.asset(
             "assets/svg/simple_linear_bg.svg",
             width: width,
+            height: height,
             fit: BoxFit.fill,
+            alignment: Alignment.topCenter,
           ),
 
           SafeArea(
@@ -147,8 +149,9 @@ class _HomePage extends State <_Home> with SingleTickerProviderStateMixin{
                           splashFactory: NoSplash.splashFactory,
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
-                          onTap: () {
+                          onTap: () async {
                             if (!_clicked) {
+                              playChangePageSound();
                               setState(() {
                                 _clicked = true;
                                 _startButton = SvgPicture.asset(

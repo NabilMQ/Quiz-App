@@ -90,7 +90,7 @@ void initLevelWidget() {
   level.substractionButton = LevelButton(
     key: const ValueKey(0),
     bg: "assets/svg/substraction_bg.svg",
-    title: "substraction",
+    title: "Substraction",
     bodyText: "Highscore: ${level.currHS?.subHighScore}",
     titleStyle: level.buttonTitle,
     bodyStyle: level.buttonBody,

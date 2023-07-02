@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:project_1/data/audio_data.dart';
 import 'package:project_1/data/data_func.dart';
 import 'package:project_1/data/temp_data.dart';
 import 'package:project_1/quizPage/question_and_answer.dart';
@@ -94,10 +95,11 @@ class _SubstractionOperationState extends State<SubstractionOperation> {
                     splashColor: Colors.transparent,
                     splashFactory: NoSplash.splashFactory,
                     highlightColor: Colors.transparent,
-                    onTap: () {
+                    onTap: () async {
                       if (!_clicked) {
                         setState(() {
                           if (isAnswerCorrect(_clicked, index)) {
+                            playCorrectSound();
                             _clicked = true;
                             questionAnswer.trueOrFalse[index] = 1;
                             TempData.subScore = TempData.subScore! + 1;
@@ -109,80 +111,85 @@ class _SubstractionOperationState extends State<SubstractionOperation> {
                             });
                           }
                           else {
+                            playWrongSound();
                             _clicked = true;
                             questionAnswer.trueOrFalse[index] = 0;
                             updateHighScore();
                             _answerBg[index] = "assets/svg/button_bg_red.svg";
                             _key[index] = const ValueKey(1);
-                            Future.delayed(const Duration(milliseconds: 1000), () => showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (ctx) => AlertDialog(
-                                insetPadding: EdgeInsets.symmetric(horizontal: width * 0.175),
-                                contentPadding: const EdgeInsets.all(0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(height * 0.05),
-                                ),
-                                content: SizedBox(
-                                  height: height * 0.25,
-                                  child: Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(height * 0.05),
-                                        child: SvgPicture.asset(
-                                          "assets/svg/alert_bg.svg",
-                                          width: width,
-                                          fit: BoxFit.fill,
-                                          clipBehavior: Clip.antiAlias,
-                                        ),
-                                      ),
-
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          SizedBox(
-                                            height: height * 0.1,
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              children: List.generate(newHighScore! ? 3 : 2, (index) => Text(labelText.elementAt(index), style: Theme.of(context).textTheme.labelLarge)),
-                                            )
+                            Future.delayed(const Duration(milliseconds: 1000), () {
+                              playGameOverSound();
+                              return showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (ctx) => AlertDialog(
+                                  insetPadding: EdgeInsets.symmetric(horizontal: width * 0.175),
+                                  contentPadding: const EdgeInsets.all(0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(height * 0.05),
+                                  ),
+                                  content: SizedBox(
+                                    height: height * 0.25,
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(height * 0.05),
+                                          child: SvgPicture.asset(
+                                            "assets/svg/alert_bg.svg",
+                                            width: width,
+                                            fit: BoxFit.fill,
+                                            clipBehavior: Clip.antiAlias,
                                           ),
-                                          Container(
-                                            padding: EdgeInsets.only(top: height * 0.035),
-                                            height: height * 0.1,
-                                            child: Center(
-                                              child: Container(
-                                                width: width * 0.525,
-                                                height: height * 0.05,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(width),
-                                                  color: Colors.white,
-                                                ),
-                                                child: InkWell(
-                                                  splashFactory: NoSplash.splashFactory,
-                                                  splashColor: Colors.transparent,
-                                                  highlightColor: Colors.transparent,
-                                                  onTap: () {
-                                                    Navigator.of(ctx).pop();
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Back To Menu",
-                                                      style: Theme.of(context).textTheme.labelLarge,
+                                        ),
+
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: [
+                                            SizedBox(
+                                              height: height * 0.1,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                children: List.generate(newHighScore! ? 3 : 2, (index) => Text(labelText.elementAt(index), style: Theme.of(context).textTheme.labelLarge)),
+                                              )
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.only(top: height * 0.035),
+                                              height: height * 0.1,
+                                              child: Center(
+                                                child: Container(
+                                                  width: width * 0.525,
+                                                  height: height * 0.05,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(width),
+                                                    color: Colors.white,
+                                                  ),
+                                                  child: InkWell(
+                                                    splashFactory: NoSplash.splashFactory,
+                                                    splashColor: Colors.transparent,
+                                                    highlightColor: Colors.transparent,
+                                                    onTap: () async {
+                                                      stopSound();
+                                                      Navigator.of(ctx).pop();
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                    child: Center(
+                                                      child: Text(
+                                                        "Back To Menu",
+                                                        style: Theme.of(context).textTheme.labelLarge,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ));
+                              );
+                            });
                           }
                         });
                       }

@@ -27,7 +27,8 @@ class _LevelButtonState extends State<LevelButton> {
       widget.bg,
       key: const ValueKey(0),
       width: double.infinity,
-      fit: BoxFit.cover,
+      height: double.infinity,
+      fit: BoxFit.fill,
     );
 
   @override

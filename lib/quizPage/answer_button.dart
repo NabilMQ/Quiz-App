@@ -23,7 +23,7 @@ class _AnswerButtonState extends State<AnswerButton> {
       widget.bg,
       key: const ValueKey(0),
       width: double.infinity,
-      fit: BoxFit.cover,
+      fit: BoxFit.fill,
     );
 
   @override

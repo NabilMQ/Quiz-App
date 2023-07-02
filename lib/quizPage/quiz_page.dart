@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:project_1/data/audio_data.dart';
 import 'question_and_answer.dart';
 
 Route toQuizPage() {
@@ -138,7 +139,8 @@ class HalamanQuiz extends State <Quiz> {
                                   splashFactory: NoSplash.splashFactory,
                                   splashColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
-                                  onTap: () {
+                                  onTap: () async {
+                                    playChangePageSound();
                                     Navigator.of(ctx).pop();
                                     Navigator.of(context).pop();
                                   },
